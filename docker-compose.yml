@@ -1,0 +1,36 @@
+version: '3.8'
+services:
+  web:
+    build: .
+    image: nitya222/hms-flask:latest  # Replace with your actual Docker Hub username
+    ports:
+      - "5000:5000"
+    environment:
+      - SQLALCHEMY_DATABASE_URI=postgresql://postgres:postgres@db:5432/hmdbms
+    depends_on:
+      - db
+    volumes:
+      - .:/app
+    networks:
+      - hms-network
+
+  db:
+    image: postgres:14
+    container_name: hms_postgres
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=hmdbms
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - hms-network
+
+volumes:
+  postgres_data:
+
+networks:
+  hms-network:
+    driver: bridge
