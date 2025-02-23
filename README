@@ -1,3 +1,5 @@
+NEEDED :
+
 docker login
 docker-compose build
 docker tag nitya222/hms-flask nitya222/hms-flask:latest
